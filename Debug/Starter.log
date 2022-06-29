@@ -1,0 +1,4 @@
+﻿  main_application.c
+C:\Users\Vlado\Desktop\PROJEKAT\main_application.c(354,7): warning C4101: 'tmp': unreferenced local variable
+C:\Users\Vlado\Desktop\PROJEKAT\main_application.c(717,71): warning C4113: 'uint32_t (__cdecl *)()' differs in parameter lists from 'uint32_t (__cdecl *)(void)'
+  Starter.vcxproj -> C:\Users\Vlado\Desktop\PROJEKAT\Debug\Starter.exe

@@ -1,0 +1,10 @@
+C:\Users\Sladja\Downloads\osnovni-fajlovi-za-projekat\Debug\Starter.exe
+D:\predavanje\autoelektronika_fajlovivezbe\osnovni-fajlovi-za-projekat-izvorno\Debug\Starter.exe
+D:\FAX\8SEMESTAR\AUTOELEKTRONIKA\Projekat_base\osnovni-fajlovi-za-projekat\Debug\Starter.exe
+C:\Users\Vladimir\Desktop\my_project\Debug\Starter.exe
+D:\FAX\8SEMESTAR\AUTOELEKTRONIKA\Projekat_base\my_project_tester\Debug\Starter.exe
+D:\FAX\8SEMESTAR\AUTOELEKTRONIKA\1.Projekat_base\my_project_tester\Debug\Starter.exe
+D:\FAX\8SEMESTAR\AUTOELEKTRONIKA\01.PROJEKAT\my_project_tester - Copy\Debug\Starter.exe
+C:\Users\Vlado\Desktop\autoelektronika\01.Project\my_project_tester - Copy1\Debug\Starter.exe
+C:\Users\Vlado\Desktop\autoelektronika\01.Project\PROJEKAT\Debug\Starter.exe
+C:\Users\Vlado\Desktop\PROJEKAT\Debug\Starter.exe
