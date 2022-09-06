@@ -17,8 +17,8 @@
 #define COM_CH1 (1)
 
 	/* TASK PRIORITIES */
-#define	prijem_kanal0 ( tskIDLE_PRIORITY + (UBaseType_t)6) //resive 0
-#define ledovke (tskIDLE_PRIORITY + (UBaseType_t)5) //pokretanje taska za prijem sa senzora
+#define	prijem_kanal0 ( tskIDLE_PRIORITY + (UBaseType_t)6) //SerialReceive0
+#define ledovke (tskIDLE_PRIORITY + (UBaseType_t)5) //start task za prijem podataka sa senzora
 #define	prijem_kanal1 (tskIDLE_PRIORITY + (UBaseType_t)4 ) //SerialReceive1
 #define obrada_rezultata (tskIDLE_PRIORITY + (UBaseType_t)3 ) //obrada_senzora
 #define	slanje_kanal0 (tskIDLE_PRIORITY + (UBaseType_t)2 ) //SerialSend slanje i primanje podataka
@@ -50,7 +50,7 @@ static uint8_t  r_point;
 
 /* 7-SEG NUMBER DATABASE - ALL HEX DIGITS */
 static const uint8_t hex[] = { 0x7c, 0x3f, 0x78, 0x76, 0x31, 0x06, 0x7D, 0x38, 0x79, 0x71 };
-
+//b, 0, t, H, r, I, G, L, E, F
 
 
 static SemaphoreHandle_t LED_INT_BinarySemaphore1;
@@ -69,38 +69,38 @@ typedef struct sBELT
 	uint8_t co_driver_sits; //tu je
 } sBELT;
 
-static sBELT seat_belt; //sam ispis
+static sBELT seat_belt;
 
 static void ispis_both(void) {
 	if (select_7seg_digit(0) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(0x00) != 0) {
+	if (set_7seg_digit(0x00) != 0) {//0
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(1) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(hex[0]) != 0) {
+	if (set_7seg_digit(hex[0]) != 0) {//b
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(2) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(hex[1]) != 0) {
+	if (set_7seg_digit(hex[1]) != 0) {//0
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(3) != 0) {
 		printf("Greska_select \n");
 	}
 
-	if (set_7seg_digit(hex[2]) != 0) {
+	if (set_7seg_digit(hex[2]) != 0) {//t
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(4) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(hex[3]) != 0) {
+	if (set_7seg_digit(hex[3]) != 0) {//H
 		printf("Greska_set \n");
 	}
 
@@ -109,32 +109,32 @@ static void ispis_left(void) {
 	if (select_7seg_digit(0) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(0x00) != 0) {
+	if (set_7seg_digit(0x00) != 0) {//0
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(1) != 0) {
 		printf("Greska_select \n");
 	}
 
-	if (set_7seg_digit(hex[7]) != 0) {
+	if (set_7seg_digit(hex[7]) != 0) {//L
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(2) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(hex[8]) != 0) {
+	if (set_7seg_digit(hex[8]) != 0) {//E
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(3) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(hex[9]) != 0) {
+	if (set_7seg_digit(hex[9]) != 0) {//F
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(4) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(hex[2]) != 0) {
+	if (set_7seg_digit(hex[2]) != 0) {//t
 		printf("Greska_set \n");
 	}
 
@@ -143,31 +143,31 @@ static void ispis_right(void) {
 	if (select_7seg_digit(0) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(hex[4]) != 0) {
+	if (set_7seg_digit(hex[4]) != 0) {//r
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(1) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(hex[5]) != 0) {
+	if (set_7seg_digit(hex[5]) != 0) {//I
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(2) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(hex[6]) != 0) {
+	if (set_7seg_digit(hex[6]) != 0) {//G
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(3) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(hex[3]) != 0) {
+	if (set_7seg_digit(hex[3]) != 0) {//H
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(4) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(hex[2]) != 0) {
+	if (set_7seg_digit(hex[2]) != 0) {//t
 		printf("Greska_set \n");
 	}
 }
@@ -175,31 +175,31 @@ static void ispis_prazan_display(void) {
 	if (select_7seg_digit(0) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(0x00) != 0) {
+	if (set_7seg_digit(0x00) != 0) {//0
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(1) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(0x00) != 0) {
+	if (set_7seg_digit(0x00) != 0) {//0
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(2) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(0x00) != 0) {
+	if (set_7seg_digit(0x00) != 0) {//0
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(3) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(0x00) != 0) {
+	if (set_7seg_digit(0x00) != 0) {//0
 		printf("Greska_set \n");
 	}
 	if (select_7seg_digit(4) != 0) {
 		printf("Greska_select \n");
 	}
-	if (set_7seg_digit(0x00) != 0) {
+	if (set_7seg_digit(0x00) != 0) {//0
 		printf("Greska_set \n");
 	}
 }
@@ -210,25 +210,25 @@ static uint32_t prvProcessRXCInterrupt(void)
 	BaseType_t xHigherPTW = pdFALSE;
 
 	if (get_RXC_status(0) != 0) {
-		if (xSemaphoreGiveFromISR(RXC_BinarySemaphore0, &xHigherPTW) != pdTRUE) { //jeidno kada nisu jednaki
+		if (xSemaphoreGiveFromISR(RXC_BinarySemaphore0, &xHigherPTW) != pdTRUE) {
 			printf("Greska \n");
 		}
 	}
-	if (get_RXC_status(1) != 0) { //jeste 1 kada je razlicit od 0
+	if (get_RXC_status(1) != 0) {
 
-		if (xSemaphoreGiveFromISR(RXC_BinarySemaphore1, &xHigherPTW) != pdTRUE) { //provera kontra slucaja
+		if (xSemaphoreGiveFromISR(RXC_BinarySemaphore1, &xHigherPTW) != pdTRUE) {
 			printf("Greska \n");
 		}
 	}
-	portYIELD_FROM_ISR((uint32_t)xHigherPTW); //lepljenje na portove
+	portYIELD_FROM_ISR((uint32_t)xHigherPTW);
 }
-static void SerialReceive0_Task(void* pvParameters) //prijem podataka
+static void SerialReceive0_Task(void* pvParameters)
 {
-	//konfiguracija pvaparametara;
+	//configASSERT(pvParameters);
 	uint8_t cc;
 	char tmp_str[100], string_queue[100];
 	static uint8_t i = 0;
-	for (;;)//inicijalza
+	for (;;)
 	{
 		printf("task 2\n");
 		if (xSemaphoreTake(RXC_BinarySemaphore0, portMAX_DELAY) != pdTRUE) {
@@ -238,14 +238,14 @@ static void SerialReceive0_Task(void* pvParameters) //prijem podataka
 			printf("Greska \n");
 		}
 		//printf("karakter koji pristize %c\n", cc);
-		if (cc != (uint8_t)13) { //1 200+
+		if (cc != (uint8_t)10) { //1 200+
 			tmp_str[i++] = (char)cc;
 
 		}
 		else {
 			tmp_str[i] = '\0';
 			i = 0;
-			printf("String sa serijske %s \n", tmp_str); // in print string format
+			printf("String sa serijske %s \n", tmp_str);
 			strcpy(string_queue, tmp_str);
 
 			if (xQueueSend(serial_queue1, &string_queue, 0) != pdTRUE) {
@@ -256,7 +256,7 @@ static void SerialReceive0_Task(void* pvParameters) //prijem podataka
 	}
 }
 
-static uint32_t OnLED_ChangeInterrupt() //kontrola kada koji pali gasi
+static uint32_t OnLED_ChangeInterrupt()
 {
 	BaseType_t higherPriorityTaskWoken = pdFALSE;
 	printf("usao u onledchange\n");
@@ -266,7 +266,7 @@ static uint32_t OnLED_ChangeInterrupt() //kontrola kada koji pali gasi
 	portYIELD_FROM_ISR((uint32_t)higherPriorityTaskWoken);
 }
 static void start(void* pvParameters) {
-	//ispis stringova
+	//configASSERT(pvParameters);
 	uint8_t led_tmp;
 	char string_start[6];
 	string_start[0] = 's';
@@ -283,7 +283,7 @@ static void start(void* pvParameters) {
 	string_stop[3] = 'p';
 	string_stop[4] = '\0';
 
-	for (;;) { //ista proverao kao i ranije
+	for (;;) {
 		printf("START FUNKCIJA\n");
 		if (xSemaphoreTake(LED_INT_BinarySemaphore1, portMAX_DELAY) != pdTRUE) {
 			printf("Greska \n");
@@ -305,14 +305,14 @@ static void start(void* pvParameters) {
 	}
 }
 
-static void SerialReceive1_Task(void* pvParameters)//Ucitava tekst i ispisuje ga malim slovima
+static void SerialReceive1_Task(void* pvParameters)
 {
 	//configASSERT(pvParameters);
 	uint8_t cc = 0;
 	char tmp_str[100], string_queue[100];
 	static uint8_t i = 0, tmp;
 
-	for (;;) //star stop
+	for (;;) //start, stop, prag
 	{
 		if (xSemaphoreTake(RXC_BinarySemaphore1, portMAX_DELAY) != pdTRUE) {
 			printf("Greska \n");
@@ -321,8 +321,8 @@ static void SerialReceive1_Task(void* pvParameters)//Ucitava tekst i ispisuje ga
 		if (get_serial_character(COM_CH1, &cc) != 0) {
 			printf("Greska_get\n");
 		}
-		printf("karakter koji pristize %c\n", cc);//print karakter
-		if (cc != (uint8_t)13) {
+		printf("karakter koji pristize %c\n", cc);
+		if (cc != (uint8_t)10) {
 			if (cc >= (uint8_t)65 && cc <= (uint8_t)90) { //velika slova prebacujemo u mala
 				tmp = cc + (uint8_t)32;
 				tmp_str[i++] = (char)tmp;
@@ -359,13 +359,13 @@ static void obrada_senzora(void* pvParameters) {
 		if (xQueueReceive(serial_queue1, &string_queue, portMAX_DELAY) != pdTRUE) {
 			printf("Greska\n");
 		}
-		printf("Posle primanja reda \n");
+		printf("Posle primanja reda reda\n");
 		printf("string ledovka: %s \n", string_queue);
 		if (strcmp(string_queue, "start\0") == 0) {//start
 			switch_pos = (uint8_t)0;
 			printf("ovde usao na ledovku");
 		}
-		else if (strcmp(string_queue, "stop\0") == 0) {//stop
+		else if (strcmp(string_queue, "stop\0") == 0) {//stop+
 			switch_pos = (uint8_t)1;
 		}
 		else if (string_queue[0] == 'p' && string_queue[1] == 'r' && string_queue[2] == 'a' && string_queue[3] == 'g' && string_queue[4] == (char)32) { //prag ....
@@ -379,7 +379,7 @@ static void obrada_senzora(void* pvParameters) {
 			printf("Usao u else, misra\n");
 		}
 
-		switch (switch_pos) { //po zadatku
+		switch (switch_pos) {
 		case 0:printf("START \n");
 			sistem_ON = 1;
 			seat_belt.driver = (uint8_t)0;
@@ -400,7 +400,7 @@ static void obrada_senzora(void* pvParameters) {
 			}
 			break;
 
-		case 2: printf("PRAG \n"); //prag 543,odredjivanje praga il zadavanje
+		case 2: printf("PRAG \n"); //prag 510
 			while (string_queue[i] != '\0') {
 				if (string_queue[i] >= '0' && string_queue[i] <= '9') {
 					cifra = (uint8_t)string_queue[i++] - (uint8_t)48;
@@ -436,7 +436,7 @@ static void obrada_senzora(void* pvParameters) {
 		case 3: printf("SENZORI\n"); // 1 30gfg0
 			seat_belt.driver = (uint8_t)string_queue[0] - (uint8_t)48; //vozac vezan ili nije
 			printf("***************************%d", seat_belt.driver);
-			digitalni_suvozac = (uint8_t)string_queue[2] - (uint8_t)48; // citanje
+			digitalni_suvozac = (uint8_t)string_queue[2] - (uint8_t)48; // ovo je ono sto mi ocitamo
 			j = 4;
 			while (string_queue[j] != '\0') {
 				if (string_queue[j] >= '0' && string_queue[j] <= '9') {
@@ -625,7 +625,7 @@ static void display_task(void* pvParameters) {
 void main_demo(void)
 {
 	if (init_LED_comm() != 0) {
-		printf("Neuspesna inicijalizacija \n"); //prazan int
+		printf("Neuspesna inicijalizacija \n");
 	}
 	if (init_7seg_comm() != 0) {
 		printf("Neuspesna inicijalizacija \n");
@@ -645,7 +645,7 @@ void main_demo(void)
 	}
 
 	/* Create LED interrapt semaphore */
-	LED_INT_BinarySemaphore1 = xSemaphoreCreateBinary(); // semafor za prekid led
+	LED_INT_BinarySemaphore1 = xSemaphoreCreateBinary();
 	if (LED_INT_BinarySemaphore1 == NULL) {
 		printf("Greska \n");
 	}
@@ -673,7 +673,7 @@ void main_demo(void)
 	}
 	//kreiranje reda*
 
-	serial_queue1 = xQueueCreate(1, 10u * sizeof(char));//bacanje u red
+	serial_queue1 = xQueueCreate(1, 10u * sizeof(char));
 	if (serial_queue1 == NULL) {
 		printf("Greska\n");
 	}
@@ -717,7 +717,7 @@ void main_demo(void)
 	vPortSetInterruptHandler(portINTERRUPT_SRL_OIC, OnLED_ChangeInterrupt);
 
 	ispis_prazan_display();
-	if (set_LED_BAR(0, 0x00) != 0) { //prazan ispis
+	if (set_LED_BAR(0, 0x00) != 0) {
 		printf("Greska \n");
 	}
 
